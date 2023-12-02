@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 use App\Controllers\Controller;
+use App\Models\WordManager;
 
 /**
  * 
@@ -13,7 +14,31 @@ class WordController extends Controller {
     }
 
     public function add() {
-        $data = [];
+        $errors = [];
+        $idMot = 0;
+
+        if(isset($_POST['nouveauMot'])) {
+            $manager = new WordManager();
+            $mot = $manager->getWord($_POST['mot']);
+            if(empty($mot)) {
+                $manager->insertWord($_POST['mot']);
+                $idMot = $manager->getLastId();
+            } else {
+                $idMot = $mot['id'];
+            }
+
+            foreach($_POST['acceptions'] as $a) {
+                $manager->insertDefinition([$idMot,$a['nature'],$a['definition']]);
+                $idDef = $manager->getLastId();
+                foreach($a['exemples'] as $e) {
+                    if(!empty($e)) {
+                        $manager->insertExample([$idDef,$e]);
+                    }
+                }
+            }
+        }
+
+        $data = ['errors' => $errors];
         $this->render('./views/template_addword.phtml',$data);
     }
 }

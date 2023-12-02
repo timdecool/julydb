@@ -1,1 +1,85 @@
-<h3 class="text-center my-5">Ajouter un mot</h3>
+
+<section class="container-fluid">
+    <h3 class="my-3">Ajouter un mot</h3>
+        <form method="POST" class="mx-auto mb-3">
+            <!-- CHAMP MOT -->
+            <div class="form-group mb-3 d-flex gap-1 align-items-center">
+                <input type="text" name="mot" id="mot" class="form-control w-25" placeholder="Entre ton mot...">
+                <button type="button" class="btn btn-outline-success" id="defBtn">Ajouter une définition</button>
+                <button type="submit" name="nouveauMot" class="btn btn-success d-none" id="submitBtn">Valider tout</button>
+            </div>
+            
+            <!-- CHAMP DEFINITION -->
+            <div id="definitions" class="row">
+            </div>
+        </form>
+</section>
+
+<script>
+    const defBtn = document.querySelector('#defBtn');
+    defBtn.addEventListener('click', addDefinition);
+    const definitions = document.querySelector('#definitions');
+
+
+    function addExample(e) {
+        const newExample = document.createElement('div');
+        newExample.classList.add('form-group','mb-2');
+        newExample.innerHTML = `
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Entre ton exemple" name="acceptions[${[... definitions.children].indexOf(e.currentTarget.parentNode.parentNode.parentNode)}][exemples][]" id="exemple" style="height: 100px"></textarea>
+            <label for="exemple">Exemple d'utilisation du mot</label>
+        </div>         
+        `;
+        e.currentTarget.parentNode.previousElementSibling.appendChild(newExample);
+    }
+
+    function deleteDefinition(e) {
+        definitions.removeChild(e.currentTarget.parentNode.parentNode.parentNode)
+    }
+
+
+    function addDefinition() {
+        const newDefinition = document.createElement('div');
+        newDefinition.classList.add('col-4');
+        newDefinition.innerHTML = `
+        <div class="card p-3 mb-3">
+                        <div class="form-group mb-2">
+                            <select class="form-select" aria-label="Sélection de la nature du mot" name="acceptions[${definitions.children.length}][nature]" id="nature">
+                            <option select>Nature du mot</option>
+                            <option value="nom">Nom</option>
+                            <option value="verbe">Verbe</option>
+                                <option value="adverbe">Adverbe</option>
+                                <option value="adjectif">Adjectif</option>
+                            </select>
+                            </div>
+                            
+                        <div class="form-group mb-2">
+                            <div class="form-floating">
+                            <textarea class="form-control" placeholder="Entre ta définition" name="acceptions[${definitions.children.length}][definition]" id="definition" style="height: 100px"></textarea>
+                                <label for="definition">Définition</label>
+                                </div>                
+                        </div>
+            
+                        <!-- EXEMPLES -->
+                        <div class="examples">
+                            <div class="form-group mb-2">
+                                <div class="form-floating">
+                                <textarea class="form-control" placeholder="Entre ton exemple" name="acceptions[${definitions.children.length}][exemples][]" id="exemple" style="height: 100px"></textarea>
+                                    <label for="exemple">Exemple d'utilisation du mot</label>
+                                </div>          
+                                </div>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-outline-secondary exampleBtn">Exemple supplémentaire</button>
+                            <button type="button" class="btn btn-outline-danger deleteBtn">Supprimer la définition</button>
+                        </div>
+        </div>
+        `;
+        document.querySelector('#definitions').appendChild(newDefinition);
+        document.querySelectorAll('.exampleBtn')[document.querySelectorAll('.exampleBtn').length-1].addEventListener('click', addExample);
+        document.querySelectorAll('.deleteBtn')[document.querySelectorAll('.deleteBtn').length-1].addEventListener('click', deleteDefinition);
+
+        const submitBtn = document.querySelector('#submitBtn');
+        if(submitBtn.classList.contains('d-none')) submitBtn.classList.remove('d-none');
+    }
+</script>
