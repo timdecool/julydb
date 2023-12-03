@@ -36,9 +36,38 @@ class WordController extends Controller {
                     }
                 }
             }
+
+            header('Location:?page=word&method=details&id='.$idMot);
         }
 
         $data = ['errors' => $errors];
         $this->render('./views/template_addword.phtml',$data);
+    }
+
+    public function details() {
+        if(isset($_GET['id'])) {
+            $wordId = $_GET['id'];
+            $manager = new WordManager();
+            $manager->updateViews($wordId);
+            $wordDetails = $manager-> getWordDetails($wordId);
+            $definitions = [];             
+            $id_def = 0;
+            foreach($wordDetails as $d) {
+                if($d["id_definition"] != $id_def) {
+                    $id_def = $d["id_definition"];
+                    $definitions[$id_def]["nature"] = $d["nature"];
+                    $definitions[$id_def]["definition"] = $d["definition"];
+                }
+                $definitions[$id_def]["exemples"][] = $d["exemple"];
+
+            }
+
+            $data = ["mot" => $wordDetails[0]['mot'],"definitions"=>$definitions, "wordDetails" => $wordDetails];
+            $this->render('./views/template_worddetails.phtml',$data);
+        }
+        else {
+            header('Location:?page=home');
+        }
+        
     }
 }

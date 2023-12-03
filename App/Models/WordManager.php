@@ -3,9 +3,11 @@ namespace App\Models;
 use App\Models\AbstractManager;
 
 class WordManager extends AbstractManager {
-    public function getAll(?string $col="*") {
+
+    public function getAll(?string $col="*", $order="id", $limit="") {
         $mots = [];
-        $select = 'SELECT '.$col.' FROM mots ORDER BY id DESC';
+
+        $select = 'SELECT '.$col.' FROM mots ORDER BY '.$order.' DESC '.$limit;
         $mots = $this->db->query($select,[],"all");
         return $mots;       
     }
@@ -24,6 +26,16 @@ class WordManager extends AbstractManager {
         return $motExistant;
     }
 
+    public function getWordDetails($id) {
+        $word = [];
+        $select = "SELECT * FROM mots
+        INNER JOIN definition ON mots.id = definition.id_mot
+        INNER JOIN exemple ON definition.id = exemple.id_definition
+        WHERE mots.id=?";
+        $word = $this->db->query($select, [$id], "all");
+        return $word;
+    }
+
     public function insertWord($mot) {
         $this->db->query("INSERT INTO mots SET mot = ?",[$mot]);
     }
@@ -34,6 +46,10 @@ class WordManager extends AbstractManager {
 
     public function insertExample($infos) {
         $this->db->query("INSERT INTO exemple SET id_definition = ?, exemple = ?",$infos);
+    }
+
+    public function updateViews($id) {
+        $this->db->query("UPDATE mots SET views=views+1 WHERE id=?", [$id]);
     }
 
     public function updateUser($firstName, $lastName, $mail, $id) {

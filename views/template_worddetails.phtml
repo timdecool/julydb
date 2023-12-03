@@ -1,0 +1,20 @@
+
+<section class="container-fluid h-100 d-flex justify-content-center align-items-center">
+    <article class="mx-auto my-5 card p-5">
+        <h3 class="my-3"><?= ucfirst($data['mot']) ?></h3>
+        <ol>
+        <?php foreach($data['definitions'] as $def) : ?>
+            <li class="mb-4">
+                <p><span class="fw-bold fst-italic"><?= $def["nature"]; ?></span>. <?= ucfirst($def["definition"]); ?>.</p>
+                <ul>
+                    <?php foreach($def["exemples"] as $e) : ?>
+                        <li class="fst-italic">"<?= ucfirst($e); ?>"</li>
+                    <?php endforeach; ?>
+                </ul>
+            </li>
+            
+        <?php endforeach; ?>
+        </ol>
+    </article>
+</section>
+
