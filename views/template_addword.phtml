@@ -4,7 +4,7 @@
         <form method="POST" class="mx-auto mb-3">
             <!-- CHAMP MOT -->
             <div class="form-group mb-3 d-flex gap-1 align-items-center">
-                <input type="text" name="mot" id="mot" class="form-control w-25" placeholder="Entre ton mot...">
+                <input type="text" name="mot" id="mot" class="form-control w-25" placeholder="Entre ton mot..." value="<?= isset($_GET['word']) ? $_GET['word']:'' ?>">
                 <button type="button" class="btn btn-outline-success" id="defBtn">Ajouter une définition</button>
                 <button type="submit" name="nouveauMot" class="btn btn-success d-none" id="submitBtn">Valider tout</button>
             </div>

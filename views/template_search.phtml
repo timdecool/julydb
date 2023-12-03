@@ -1,0 +1,16 @@
+<section class="container-fluid my-5">
+    <h3>
+        <?= sizeof($data['words']) > 0 ? sizeof($data['words']):"Aucun" ?> résultat<?= sizeof($data['words']) > 1 ? "s":"" ?> pour la recherche "<?= $_GET['query'] ?>".
+    </h3>
+    <?php if(sizeof($data['words']) > 0) : ?>
+    <ol>
+        <?php foreach($data['words'] as $w) : ?>
+        <li>
+            <?= $w['mot']; ?> - <a class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="?page=word&method=details&id=<?= $w["id"]?>">Consulter</a>             
+        </li>
+        <?php endforeach; ?>        
+    </ol>
+    <?php else : ?>
+        <a class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="?page=word&method=add&word=<?= $_GET['query'] ?>">Ajouter une définition pour "<?= $_GET['query'] ?>" ?</a>      
+    <?php endif; ?>
+</section>

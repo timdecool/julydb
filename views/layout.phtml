@@ -29,14 +29,19 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="?page=training">Entraînement</a>
                     </li>
+                    <li class="nav-item align-self-center justify-self-right mx-md-5">
+                        <div>
+                            <form class="d-flex" role="search" method="GET">
+                                <input type="hidden" name="page" value="word">
+                                <input type="hidden" name="method" value="search">
+                                <input class="form-control me-2" type="search" placeholder="Rechercher un mot" name="query" aria-label="Search">
+                                <button class="btn btn-outline-success" type="submit">Recherche</button>
+                            </form>
+                        </div>
+                    </li>
                 </ul>
             </div>
-            <div>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Rechercher un mot" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Recherche</button>
-                </form>
-            </div>
+
         </div>
         
         </nav>

@@ -26,6 +26,13 @@ class WordManager extends AbstractManager {
         return $motExistant;
     }
 
+    public function searchWords($q) {
+        $words = [];
+        $select = "SELECT * FROM mots WHERE mot LIKE '%".$q."%' ORDER BY id DESC";
+        $words = $this->db->query($select,[],"all");
+        return $words;
+    }
+
     public function getWordDetails($id) {
         $word = [];
         $select = "SELECT * FROM mots

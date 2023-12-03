@@ -70,4 +70,11 @@ class WordController extends Controller {
         }
         
     }
+
+    public function search() {
+        $manager = new WordManager();
+        $words = $manager->searchWords($_GET['query']);
+        $data = ["words" => $words];
+        $this->render('./views/template_search.phtml',$data);
+    }
 }
