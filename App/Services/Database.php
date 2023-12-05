@@ -23,7 +23,7 @@ class Database {
         $db_port = '3306',
         $db_name = 'julydb',
         $db_user = 'root',
-        $db_pass = 'root'
+        $db_pass = ''
     ) {
         $this->db_host = $db_host;
         $this->db_port = $db_port;

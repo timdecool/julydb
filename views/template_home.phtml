@@ -1,6 +1,5 @@
 <div class="container-fluid">
     <h2 class="my-3">Bonjour Julie !</h2>
-
     <div class="row gap-2 mt-3 container-fluid">
         <div class="col card p-3">
             <h4>Derniers mots ajoutés</h4>
@@ -9,9 +8,8 @@
                     <?= $i+1 ?>. <?= ucfirst($data['lastCreated'][$i]["mot"]) ?> <small class="text-secondary fst-italic">(<?= date_format(date_create($data['lastCreated'][$i]["date_creation"]), "d M Y, H:i") ?>)</small>
                     - <a class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="?page=word&method=details&id=<?= $data['lastCreated'][$i]["id"]?>">Consulter</a>
                 </div>
-            <? endfor; ?>
+            <?php endfor; ?>
         </div>
-
         <div class="col card p-3">
             <h4>Mots les plus consultés</h4>
             <?php for($i = 0; $i < sizeof($data['mostViewed']); $i++) : ?>
@@ -19,8 +17,7 @@
                     <?= $i+1 ?>. <?= ucfirst($data['mostViewed'][$i]["mot"]) ?> <small class="text-secondary fst-italic">(<?= $data['mostViewed'][$i]["views"] ?> vue<?= $data['mostViewed'][$i]["views"] > 1 ? "s":"" ?>)</small>
                     - <a class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="?page=word&method=details&id=<?= $data['mostViewed'][$i]["id"]?>">Consulter</a>
                 </div>
-            <? endfor; ?>
+            <?php endfor; ?>
         </div>
-
     </div>
 </div>
